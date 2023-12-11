@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Students\Session\AuthStudentsController;
+use App\Http\Controllers\Api\TeachersTaskController;
 use App\Http\Controllers\Api\Teachers\Session\AuthTeachersController;
 use App\Http\Controllers\Api\Users\Session\AuthUserController;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +35,19 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('logout', [AuthTeachersController::class, 'logout']);
         Route::post('refresh', [AuthTeachersController::class, 'refresh']);
         Route::post('me', [AuthTeachersController::class, 'me']);
+
     });
 
+    Route::group(['prefix' => 'students'], function () {
+        Route::post('login', [AuthStudentsController::class, 'login']);
+        Route::post('logout', [AuthStudentsController::class, 'logout']);
+        Route::post('refresh', [AuthStudentsController::class, 'refresh']);
+        Route::post('me', [AuthStudentsController::class, 'me']);
+    });
+
+});
+
+Route::group(['prefix' => 'teachers'], function () {
+    Route::post('tasks', [TeachersTaskController::class, 'store']);
+    Route::get('tasks', [TeachersTaskController::class, 'show']);
 });
