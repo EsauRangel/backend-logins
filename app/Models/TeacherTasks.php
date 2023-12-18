@@ -28,9 +28,8 @@ class TeacherTasks extends Model
         if (is_null($this->image_url)) {
             return null;
         }
-
-        if (Storage::disk('task-images')->exists($this->image_url)) {
-            return Storage::disk('task-images')->temporaryUrl($this->image_url, now()->addMinutes(30));
+        if (Storage::disk('s3-disk')->exists($this->image_url)) {
+            return Storage::disk('s3-disk')->temporaryUrl($this->image_url, now()->addMinutes(30));
         } else {
             return null;
         }

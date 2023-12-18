@@ -27,8 +27,9 @@ class TeachersTaskController extends Controller
             'student_id' => 'required|numeric|exists:students,id',
         ]);
 
+        $date = now()->format("YmdHis");
         if (request()->image_url) {
-            request()->image_url = Storage::disk("task-images")->putFileAs( request()->file('image_url'), "mi-imagen.png");
+            request()->image_url = Storage::disk("s3-disk")->putFileAs("public", request()->file('image_url'), "mi-imagen$date.png");
         }
 
         $task = TeacherTasks::create([
