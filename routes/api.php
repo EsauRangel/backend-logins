@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Students\Session\AuthStudentsController;
-use App\Http\Controllers\Api\TeachersTaskController;
+use App\Http\Controllers\Api\Teachers\TeachersTaskController;
 use App\Http\Controllers\Api\Teachers\Session\AuthTeachersController;
 use App\Http\Controllers\Api\Users\Session\AuthUserController;
 use Illuminate\Support\Facades\Route;

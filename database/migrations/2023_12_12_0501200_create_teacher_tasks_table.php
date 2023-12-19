@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("image_url")->nullable()->default(null);
             $table->string("description");
             $table->foreignId("student_id")->constrained();
+            $table->boolean("active")->default(true);
             $table->timestamps();
         });
     }

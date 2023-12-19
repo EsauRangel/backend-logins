@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Teachers;
 
 use App\Http\Controllers\Controller;
 use App\Models\TeacherTasks;
@@ -14,7 +14,16 @@ class TeachersTaskController extends Controller
     }
     public function show()
     {
-        $tasks = TeacherTasks::all();
+        $page = request()->page ?? 5;
+        $query = request()->q;
+        $report = request()->report ?? false;
+        $tasks = TeacherTasks::search($query)->active();
+
+        if ($report) {
+            $tasks = $tasks->all();
+        } else {
+            $tasks = $tasks->paginate($page);
+        }
 
         return response()->json(["success" => $tasks]);
     }

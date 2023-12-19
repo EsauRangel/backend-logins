@@ -16,13 +16,33 @@ class TeacherTasks extends Model
         'student_id',
     ];
 
+    protected $appends = ["secureURL"];
+
+    public function scopeSearch($query, $search)
+    {
+        if (!$search) {
+            return $query;
+        }
+
+        return $query
+            ->where("description", "LIKE", "%$search%")
+            ->orWhereHas("student", function ($q) use ($search) {
+                $q->where("name", "LIKE", "%$search%");
+            });
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where("active", true);
+    }
+
+    //Relations
     public function student()
     {
         return $this->belongsTo(Student::class);
     }
 
-    protected $appends = ["secureURL"];
-
+    //Appends
     public function getSecureURLAttribute()
     {
         if (is_null($this->image_url)) {
